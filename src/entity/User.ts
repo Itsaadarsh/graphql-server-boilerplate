@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity} from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
-@Entity()
+@Entity("users")
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn("uuid")
