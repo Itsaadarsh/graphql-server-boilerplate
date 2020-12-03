@@ -1,1 +1,1 @@
-# prisma-graphql-server
+# graphql-server-boilerplate
