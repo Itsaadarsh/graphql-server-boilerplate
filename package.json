@@ -24,10 +24,11 @@
       "typeorm": "0.2.29"
    },
    "scripts": {
-      "start": "nodemon --exec ts-node src/index.ts",
+      "start": "SET NODE_ENV=dev&nodemon --exec ts-node src/index.ts",
+      "test-server": "SET NODE_ENV=test&ts-node src/index.ts",
       "test": "jest",
       "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
-   },
+    },
    "jest": {
       "transform": {
          "^.+\\.tsx?$": "ts-jest"

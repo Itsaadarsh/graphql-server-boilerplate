@@ -1,24 +1,53 @@
-{
-   "type": "postgres",
-   "host": "localhost",
-   "port": 5432,
-   "username": "postgres",
-   "password": "rootadmin",
-   "database": "graphql-server-boilerplate",
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "src/entity/**/*.ts"
-   ],
-   "migrations": [
-      "src/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
+[
+   {
+      "name": "dev",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5432,
+      "username": "postgres",
+      "password": "rootadmin",
+      "database": "graphql-server-boilerplate",
+      "synchronize": true,
+      "logging": false,
+      "entities": [
+         "src/entity/**/*.ts"
+      ],
+      "migrations": [
+         "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+         "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+         "entitiesDir": "src/entity",
+         "migrationsDir": "src/migration",
+         "subscribersDir": "src/subscriber"
+      }
+   },
+   {
+      "name": "test",
+      "type": "postgres",
+      "host": "localhost",
+      "port": 5432,
+      "username": "postgres",
+      "password": "rootadmin",
+      "database": "graphql-server-boilerplate-test",
+      "dropSchema": true,
+      "synchronize": true,
+      "logging": false,
+      "entities": [
+         "src/entity/**/*.ts"
+      ],
+      "migrations": [
+         "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+         "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+         "entitiesDir": "src/entity",
+         "migrationsDir": "src/migration",
+         "subscribersDir": "src/subscriber"
+      }
    }
-}
+]
