@@ -1,4 +1,5 @@
 import { request } from "graphql-request";
+import { getConnection } from "typeorm";
 import { User } from "../entity/User";
 import { createTypeormCon } from "../utils/createTypeORMCon";
 
@@ -6,7 +7,11 @@ beforeAll(async() => {
     await createTypeormCon();
 })
 
-const {email,password} = {email: "aadi@aadi.lastcom", password: "lololololololol"}
+afterAll(async() => {
+  await getConnection().close()
+})
+
+const {email,password} = {email: "aadi@aadi.com", password: "lololololololol"}
 const host: string = 'http://localhost:4000/'
 const mutation = `
     mutation {
