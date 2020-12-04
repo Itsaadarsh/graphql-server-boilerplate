@@ -1,7 +1,7 @@
 import { request } from "graphql-request";
 import { getConnection } from "typeorm";
-import { User } from "../entity/User";
-import { createTypeormCon } from "../utils/createTypeORMCon";
+import { User } from "../../entity/User";
+import { createTypeormCon } from "../../utils/createTypeORMCon";
 
 beforeAll(async() => {
     await createTypeormCon();
