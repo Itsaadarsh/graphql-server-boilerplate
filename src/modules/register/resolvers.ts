@@ -11,10 +11,19 @@ interface ResolverMap {
 export const resolvers: ResolverMap = {
   Mutation: {
     register: async(_, {email,password}: GQL.IRegisterOnMutationArguments) => {
+      const findUser = await User.findOne({where: {email},select: ["id"]})
+      if(findUser) {
+        return [
+          {
+            path: "email",
+            message: "Email Already Taken!"
+          }
+        ]
+      }
       const hash = await bcrypt.hash(password, 10);
       const user = await User.create({email, password: hash})
       await user.save()
-      return true
+      return null
     }
   }
 }
