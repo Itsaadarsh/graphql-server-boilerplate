@@ -20,25 +20,23 @@ const mutation = (testEmail: string,testPass: string) =>  `
         register(email: "${testEmail}", password: "${testPass}"){path}
     }
 `
-
-test("Register test", async () => {
-
-    // test to add user to db
-    const req1 = await request(host, mutation(email,password))
-    expect(req1).toEqual({register: null})
-    const users = await User.find({where: {email}})
-    expect(users).toHaveLength(1)
-    const user = users[0]
-    expect(user.email).toEqual(email)
-    expect(user.password).not.toEqual(password)
-
-    // test to check for duplicate email's
-    const req2 = await request(host, mutation(email,password))
-    expect(req2.register).toHaveLength(1);
-    expect(req2.register[0].path).toEqual('email');
-    
-    // test the validatiom
-    const req3 = await request(host, mutation('1',password))
-    expect(req3.register).toHaveLength(2)
-
+describe("Register Test", () => {
+    it("add one user to db", async () => {
+        const req1 = await request(host, mutation(email,password))
+        expect(req1).toEqual({register: null})
+        const users = await User.find({where: {email}})
+        expect(users).toHaveLength(1)
+        const user = users[0]
+        expect(user.email).toEqual(email)
+        expect(user.password).not.toEqual(password)
+    })
+    it("check for duplicate value", async () => {
+        const req2 = await request(host, mutation(email,password))
+        expect(req2.register).toHaveLength(1);
+        expect(req2.register[0].path).toEqual('email');
+    })
+    it("test validation system", async () => {        
+        const req3 = await request(host, mutation('1',password))
+        expect(req3.register).toHaveLength(2)
+    })
 })
