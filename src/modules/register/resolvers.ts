@@ -39,7 +39,7 @@ export const resolvers: ResolverMap = {
       const hash = await bcrypt.hash(password, 10);
       const user = await User.create({email, password: hash})
       await user.save()
-      const confLink = await confEmailLink(url,user.id,redis)
+      await confEmailLink(url,user.id,redis)
       return null
     }
   }

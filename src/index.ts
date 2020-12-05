@@ -1,13 +1,13 @@
 import "reflect-metadata";
+import * as fs from 'fs'
+import * as path from 'path'
+import * as Redis from 'ioredis'
 import { GraphQLServer } from 'graphql-yoga'
 import { createTypeormCon } from "./utils/createTypeORMCon";
 import { GraphQLSchema } from "graphql";
-import * as fs from 'fs'
-import * as path from 'path'
-import { mergeSchemas, makeExecutableSchema } from "graphql-tools";
 import { importSchema } from "graphql-import";
-import * as Redis from 'ioredis'
 import { User } from "./entity/User";
+import { mergeSchemas, makeExecutableSchema } from "graphql-tools";
 
 export const startServer = async () => {
     const schemas: GraphQLSchema[] = []
