@@ -20,6 +20,7 @@
       "uuid": "^8.3.1"
    },
    "dependencies": {
+      "@gql2ts/from-schema": "^2.0.0-4",
       "bcrypt": "^5.0.0",
       "express": "^4.17.1",
       "gql2ts": "^1.10.1",
@@ -40,7 +41,7 @@
       "test-server": "SET NODE_ENV=test&ts-node src/index.ts",
       "test": "SET NODE_ENV=test&jest --watch",
       "test-all": "start-server-and-test test-server http://localhost:4000 test",
-      "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
+      "gen-schema-types": "ts-node src/scripts/createTypes.ts"
    },
    "jest": {
       "transform": {

@@ -1,23 +1,11 @@
 import "reflect-metadata";
-import * as fs from 'fs'
-import * as path from 'path'
+import { confEmailRoute } from "./routes/confEmail";
 import { GraphQLServer } from 'graphql-yoga'
 import { createTypeormCon } from "./utils/createTypeORMCon";
-import { GraphQLSchema } from "graphql";
-import { importSchema } from "graphql-import";
-import { mergeSchemas, makeExecutableSchema } from "graphql-tools";
-import { confEmailRoute } from "./routes/confEmail";
 import { redis } from "./redisInstance";
+import { genSchema } from "./utils/genSchema";
 
-const schemas: GraphQLSchema[] = []
-const folders = fs.readdirSync(path.join(__dirname,'./modules'))
-folders.forEach(folder => {
-    const {resolvers} =  require(`./modules/${folder}/resolvers`)
-    const typeDefs = importSchema(path.join(__dirname, `./modules/${folder}/schema.graphql`));
-    schemas.push(makeExecutableSchema({resolvers,typeDefs}))  
-})
-
-const schema: any= mergeSchemas({schemas})
+const schema: any=  genSchema()
 const server = new GraphQLServer({schema,context: ({request}) => ({
     redis,
     url: request.protocol + '://' + request.get("host")

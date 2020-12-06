@@ -20,6 +20,22 @@ line: number;
 column: number;
 }
 
+interface IError {
+__typename: "Error";
+path: string;
+message: string;
+}
+
+interface IMutation {
+__typename: "Mutation";
+register: Array<IError> | null;
+}
+
+interface IRegisterOnMutationArguments {
+email: string;
+password: string;
+}
+
 interface IQuery {
 __typename: "Query";
 hello: string;
@@ -27,16 +43,6 @@ hello: string;
 
 interface IHelloOnQueryArguments {
 name?: string | null;
-}
-
-interface IMutation {
-__typename: "Mutation";
-register: boolean | null;
-}
-
-interface IRegisterOnMutationArguments {
-email: string;
-password: string;
 }
 }
 
