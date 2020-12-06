@@ -30,10 +30,11 @@ export const startServer = async () => {
         const userId = await redis.get(id)
         if(userId){
             await User.update({id:userId},{confirmed:true})
+            await redis.del(id)
             res.send('Confirmed')
         }
         else{
-            res.send('Somthing went wrong!')
+            res.send('Something went wrong!')
         }
     })
 
