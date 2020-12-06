@@ -5,6 +5,7 @@ import { User } from "../../entity/User";
 import { yupErrorHandling } from '../../utils/yupErrorHanding';
 import { Redis } from 'ioredis';
 import { confEmailLink } from '../../utils/confEmailLink';
+import { sendEmail } from '../../utils/sendEmail';
 
 const schema = yup.object().shape({
   email: yup.string().min(3).max(255).email(),
@@ -39,7 +40,7 @@ export const resolvers: ResolverMap = {
       const hash = await bcrypt.hash(password, 10);
       const user = await User.create({email, password: hash})
       await user.save()
-      await confEmailLink(url,user.id,redis)
+      sendEmail(email,await confEmailLink(url,user.id,redis))
       return null
     }
   }

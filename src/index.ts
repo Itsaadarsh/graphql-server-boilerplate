@@ -4,6 +4,7 @@ import { GraphQLServer } from 'graphql-yoga'
 import { createTypeormCon } from "./utils/createTypeORMCon";
 import { redis } from "./redisInstance";
 import { genSchema } from "./utils/genSchema";
+import "dotenv/config"
 
 const schema: any=  genSchema()
 const server = new GraphQLServer({schema,context: ({request}) => ({
