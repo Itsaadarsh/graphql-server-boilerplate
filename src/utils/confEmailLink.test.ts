@@ -1,13 +1,12 @@
-import * as Redis from 'ioredis'
 import fetch from "node-fetch";
 import { confEmailLink } from "./confEmailLink";
 import { createTypeormCon } from "./createTypeORMCon";
 import { User } from "../entity/User";
 import { getConnection } from "typeorm";
+import { redis } from '../redisInstance';
 
 let userId: string;
-let test2Url:string;
-const redis = new Redis() 
+let test2Url:string; 
 
 beforeAll(async() => {
     await createTypeormCon()
