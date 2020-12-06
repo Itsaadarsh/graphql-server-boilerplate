@@ -3,7 +3,7 @@ import { confEmailLink } from "./confEmailLink";
 import { createTypeormCon } from "./createTypeORMCon";
 import { User } from "../entity/User";
 import { getConnection } from "typeorm";
-import { redis } from '../redisInstance';
+import { redis } from "./redisInstance";
 
 let userId: string;
 let test2Url:string; 
@@ -15,7 +15,6 @@ beforeAll(async() => {
         password: 'akjdhakjsdhakljd'
     }).save()
     userId = user.id
-    process.env.TEST_HOST = 'http://localhost:4000'
 })
 
 afterAll(async() => {
