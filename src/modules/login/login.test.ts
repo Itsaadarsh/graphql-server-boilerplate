@@ -1,4 +1,5 @@
 import { request } from "graphql-request";
+import { User } from "../../entity/User";
 import { createTypeormCon } from "../../utils/createTypeORMCon";
 
 beforeAll(async() => {
@@ -21,9 +22,29 @@ const registerMutation = (testEmail: string,testPass: string) =>  `
 `
 
 describe("Login tests", () => {
+    
+    test("Invalid email login", async () => {
+        const req = await request(process.env.TEST_HOST!,loginMutation('bad@email.com',password))
+        expect(req.login).toHaveLength(1)
+        expect(req.login[0].message).toEqual('Invalid login! Try again.')
+    })
+    
+    test("Invalid password login", async () => {
+        const req = await request(process.env.TEST_HOST!,loginMutation(email,'lololol'))
+        expect(req.login).toHaveLength(1)
+        expect(req.login[0].message).toEqual('Invalid login! Try again.')
+    })
+
+    test("Confirm email", async () => {
+        const req = await request(process.env.TEST_HOST!,loginMutation(email,password))
+        expect(req.login).toHaveLength(1)
+        expect(req.login[0].message).toEqual('Please confirm your email!')
+    })
+    
     test("Successful login", async () => {
-        const req1 = await request(process.env.TEST_HOST!,loginMutation(email,password))
-        expect(req1.login).toHaveLength(1)
-        expect(req1.login[0].message).toEqual('Please confirm your email!')
+        User.update({email},{confirmed:true})
+        const req = await request(process.env.TEST_HOST!,loginMutation(email,password))
+        console.log(req); 
+        expect(req.login).toBeNull()
     })
 })
