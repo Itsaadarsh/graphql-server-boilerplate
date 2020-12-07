@@ -21,7 +21,6 @@ export const resolvers: ResolverMap = {
         }]
       }
 
-      
       const isValid = await bcrypt.compare(password,user?.password)
       if(!isValid){
         return [{
@@ -29,7 +28,7 @@ export const resolvers: ResolverMap = {
           message: 'Invalid login! Try again.'
         }]
       }
-      
+
       if(!user.confirmed){
         return [{
           path: 'email',
