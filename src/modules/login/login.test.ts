@@ -44,7 +44,6 @@ describe("Login tests", () => {
     test("Successful login", async () => {
         User.update({email},{confirmed:true})
         const req = await request(process.env.TEST_HOST!,loginMutation(email,password))
-        console.log(req); 
         expect(req.login).toBeNull()
     })
 })

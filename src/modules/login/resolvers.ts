@@ -5,13 +5,17 @@ import { User } from "../../entity/User";
 
 interface ResolverMap {
   [key: string]: {
-    [key: string]: (parent:any,args: any, context: {redis:Redis, url: string}, info:any) => any
+    [key: string]: (parent:any,args: any, context: {redis:Redis, url: string, session:SESSION}, info:any) => any
   }
+}
+
+interface SESSION {
+  userId: string
 }
 
 export const resolvers: ResolverMap = {
   Mutation: {
-    login: async(_, {email,password}: GQL.ILoginOnMutationArguments) => {
+    login: async(_, {email,password}: GQL.ILoginOnMutationArguments,{session} ) => {
       const user = await User.findOne({where: {email}})
 
       if(!user){
@@ -36,6 +40,8 @@ export const resolvers: ResolverMap = {
         }]
       }
 
+      session.userId = user.id
+      
       return null
     }
   }
