@@ -1,17 +1,7 @@
 import * as bcrypt from 'bcrypt'
 import { GQL } from "../../types/schema"
-import { Redis } from 'ioredis';
 import { User } from "../../entity/User";
-
-interface ResolverMap {
-  [key: string]: {
-    [key: string]: (parent:any,args: any, context: {redis:Redis, url: string, session:SESSION}, info:any) => any
-  }
-}
-
-interface SESSION {
-  userId: string
-}
+import { ResolverMap } from '../../utils/interface';
 
 export const resolvers: ResolverMap = {
   Mutation: {
@@ -40,7 +30,7 @@ export const resolvers: ResolverMap = {
         }]
       }
 
-      session.userId = user.id
+      session.userId = user.id      
       
       return null
     }
