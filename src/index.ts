@@ -35,7 +35,7 @@ server.express.use(session({
 
 const cors = {
     credentials: true,
-    origin: 'https://localhost:6969'
+    origin: process.env.NODE_ENV === 'test' ? '*' : 'https://localhost:6969'
 }
 
 server.express.get('/confirm/:id', confEmailRoute)
