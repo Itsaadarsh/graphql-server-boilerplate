@@ -1,6 +1,5 @@
 import * as yup from 'yup'
 import { GQL } from "../../types/schema"
-import * as bcrypt from "bcrypt"
 import { User } from "../../entity/User";
 import { yupErrorHandling } from '../../utils/yupErrorHanding';
 import { Redis } from 'ioredis';
@@ -37,8 +36,7 @@ export const resolvers: ResolverMap = {
           }
         ]
       }
-      const hash = await bcrypt.hash(password, 10);
-      const user = await User.create({email, password: hash})
+      const user = await User.create({email, password})
       await user.save()
       // sendEmail(email,await confEmailLink(url,user.id,redis))
       confEmailLink(url,user.id,redis)

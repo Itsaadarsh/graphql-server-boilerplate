@@ -51,7 +51,6 @@ describe("me", () => {
         withCredentials: true
       }
     );
-      
     expect(response.data.data).toEqual({
       me: {
         id: userId,

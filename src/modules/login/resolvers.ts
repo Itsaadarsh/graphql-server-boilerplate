@@ -14,24 +14,24 @@ export const resolvers: ResolverMap = {
           message: 'Invalid login! Try again.'
         }]
       }
-
+      
       const isValid = await bcrypt.compare(password,user?.password)
+      
       if(!isValid){
         return [{
           path: 'passsword',
           message: 'Invalid login! Try again.'
         }]
       }
-
+      
       if(!user.confirmed){
         return [{
           path: 'email',
           message: 'Please confirm your email!'
         }]
       }
-
-      session.userId = user.id      
       
+      session.userId = user.id
       return null
     }
   }
