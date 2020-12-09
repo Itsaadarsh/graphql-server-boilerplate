@@ -1,28 +1,25 @@
+import { Session } from 'express-session';
 import { Redis } from 'ioredis';
 
 export interface ResolverMap {
-    [key: string]: {
-      [key: string]: Resolver
-    }
+  [key: string]: {
+    [key: string]: Resolver;
+  };
 }
 
-export type Resolver = (
-    parent:any,
+export interface Resolver {
+  (parent: any, args: any, context: { redis: Redis; url: string; session: SESSION }, info: any): any;
+}
+export interface Middleware {
+  (
+    resolver: Resolver,
+    parent: any,
     args: any,
-    context: {redis:Redis, url: string, session:SESSION },
-    info:any
-  ) => any
+    context: { redis: Redis; url: string; session: SESSION },
+    info: any
+  ): any;
+}
 
-
-export type Middleware = (
-  resolver:Resolver,
-  parent:any,
-  args: any,
-  context: {redis:Redis, url: string, session:SESSION },
-  info:any
-) => any
-
-interface SESSION {
-    userId?: string
-  }
-  
+export interface SESSION extends Session {
+  userId?: string;
+}

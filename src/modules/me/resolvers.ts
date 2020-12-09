@@ -1,9 +1,14 @@
-import { User } from "../../entity/User";
-import { ResolverMap } from "../../utils/interface";
-import middleware, { createMiddleware } from "./middleware";
+import { User } from '../../entity/User';
+import { createMiddleware } from '../../utils/createeMiddleware';
+import { ResolverMap } from '../../utils/interface';
+import middleware from './middleware';
 
 export const resolvers: ResolverMap = {
   Query: {
-    me: createMiddleware(middleware,(_,__,{session}) => User.findOne({where: {id:session.userId}}))
-  }
-}
+    me: createMiddleware(middleware, (_, __, { session }) => {
+      console.log(session);
+
+      User.findOne({ where: { id: session.userId } });
+    }),
+  },
+};

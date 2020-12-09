@@ -1,2 +1,2 @@
-import * as Redis from 'ioredis'
-export const redis = new Redis()
+import * as Redis from 'ioredis';
+export const redis = new Redis();
