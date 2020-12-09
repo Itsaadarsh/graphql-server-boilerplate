@@ -9,7 +9,6 @@
       "database": "graphql-server-boilerplate",
       "synchronize": true,
       "logging": false,
-      "dropSchema": true,
       "entities": [
          "src/entity/**/*.ts"
       ],

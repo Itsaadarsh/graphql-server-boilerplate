@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getConnection } from "typeorm";
 import { User } from "../../entity/User";
 import { createTypeormCon } from "../../utils/createTypeORMCon";
 
@@ -14,6 +15,10 @@ beforeAll(async () => {
   }).save();
   userId = user.id;
 });
+
+afterAll(async() => {
+  await getConnection().close()
+})
 
 const loginMutation = (testEmail: string,testPass: string) =>  `
     mutation {
@@ -31,7 +36,17 @@ const meQuery = `
 `;
 
 describe("me", () => {
-  test("get current user", async () => {
+  test("user not authenticated", async() => {
+    const res = await axios.post(
+      process.env.TEST_HOST as string,
+      {
+        query: meQuery
+      }
+    );
+    expect(res.data.data).toBeNull()
+  })
+  
+  test("get authenticated user", async () => {
     await axios.post(
       process.env.TEST_HOST as string,
       {

@@ -1,10 +1,15 @@
 import { request } from "graphql-request";
+import { getConnection } from "typeorm";
 import { User } from "../../entity/User";
 import { createTypeormCon } from "../../utils/createTypeORMCon";
 
 beforeAll(async() => {
     await createTypeormCon()
     await request(process.env.TEST_HOST!,registerMutation(email,password))
+})
+
+afterAll(async() => {
+    await getConnection().close()
 })
 
 const {email,password} = {email: "aadi@aadi.com", password: "123456"}
