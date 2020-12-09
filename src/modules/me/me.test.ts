@@ -40,7 +40,7 @@ describe('me', () => {
     const res = await axios.post(process.env.TEST_HOST as string, {
       query: meQuery,
     });
-    expect(res.data.data).toBeNull();
+    expect(res.data.me).toBeNull();
   });
 
   test('get authenticated user', async () => {
