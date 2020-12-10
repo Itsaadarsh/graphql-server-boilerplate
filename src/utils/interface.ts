@@ -7,19 +7,21 @@ export interface ResolverMap {
   };
 }
 
-export interface Resolver {
-  (parent: any, args: any, context: { redis: Redis; url: string; session: SESSION }, info: any): any;
-}
-export interface Middleware {
-  (
-    resolver: Resolver,
-    parent: any,
-    args: any,
-    context: { redis: Redis; url: string; session: SESSION },
-    info: any
-  ): any;
-}
+export type Resolver = (
+  parent: any,
+  args: any,
+  context: { redis: Redis; url: string; session: SESSION },
+  info: any
+) => any;
+
+export type Middleware = (
+  resolver: Resolver,
+  parent: any,
+  args: any,
+  context: { redis: Redis; url: string; session: SESSION },
+  info: any
+) => any;
 
 export interface SESSION extends Session {
-  userId?: string;
+  userId: string;
 }

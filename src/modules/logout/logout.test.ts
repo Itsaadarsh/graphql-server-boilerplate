@@ -68,6 +68,6 @@ describe('logout ', () => {
       { query: meQuery },
       { withCredentials: true }
     );
-    expect(res.data.data).toBeNull();
+    expect(res.data.data.me).toBeNull();
   });
 });

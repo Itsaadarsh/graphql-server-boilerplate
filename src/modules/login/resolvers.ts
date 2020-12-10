@@ -29,7 +29,6 @@ export const resolvers: ResolverMap = {
       }
 
       session.userId = user.id;
-      console.log(session);
 
       if (!user.confirmed) {
         return [
