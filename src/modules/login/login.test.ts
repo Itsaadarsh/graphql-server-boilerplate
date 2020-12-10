@@ -1,11 +1,12 @@
-import { request } from 'graphql-request';
 import { getConnection } from 'typeorm';
 import { User } from '../../entity/User';
 import { createTypeormCon } from '../../utils/createTypeORMCon';
+import { TestClient } from '../../utils/testClient';
 
 beforeAll(async () => {
   await createTypeormCon();
-  await request(process.env.TEST_HOST!, registerMutation(email, password));
+  const classTest = new TestClient(process.env.TEST_HOST!);
+  await classTest.register(email, password);
 });
 
 afterAll(async () => {
@@ -14,40 +15,32 @@ afterAll(async () => {
 
 const { email, password } = { email: 'aadi@aadi.com', password: '123456' };
 
-const loginMutation = (testEmail: string, testPass: string) => `
-    mutation {
-        login(email: "${testEmail}", password: "${testPass}"){path message}
-    }
-`;
-
-const registerMutation = (testEmail: string, testPass: string) => `
-    mutation {
-        register(email: "${testEmail}", password: "${testPass}"){path message}
-    }
-`;
-
 describe('Login tests', () => {
   test('Invalid email login', async () => {
-    const req = await request(process.env.TEST_HOST!, loginMutation('bad@email.com', password));
-    expect(req.login).toHaveLength(1);
-    expect(req.login[0].message).toEqual('Invalid login! Try again.');
+    const classTest = new TestClient(process.env.TEST_HOST!);
+    const req = await classTest.login('asdasd', password);
+    expect(req.data.login).toHaveLength(1);
+    expect(req.data.login[0].message).toEqual('Invalid login! Try again.');
   });
 
   test('Invalid password login', async () => {
-    const req = await request(process.env.TEST_HOST!, loginMutation(email, 'lololol'));
-    expect(req.login).toHaveLength(1);
-    expect(req.login[0].message).toEqual('Invalid login! Try again.');
+    const classTest = new TestClient(process.env.TEST_HOST!);
+    const req = await classTest.login(email, 'asdasdasd');
+    expect(req.data.login).toHaveLength(1);
+    expect(req.data.login[0].message).toEqual('Invalid login! Try again.');
   });
 
   test('Confirm email', async () => {
-    const req = await request(process.env.TEST_HOST!, loginMutation(email, password));
-    expect(req.login).toHaveLength(1);
-    expect(req.login[0].message).toEqual('Please confirm your email!');
+    const classTest = new TestClient(process.env.TEST_HOST!);
+    const req = await classTest.login(email, password);
+    expect(req.data.login).toHaveLength(1);
+    expect(req.data.login[0].message).toEqual('Please confirm your email!');
   });
 
   test('Successful login', async () => {
     await User.update({ email }, { confirmed: true });
-    const req = await request(process.env.TEST_HOST!, loginMutation(email, password));
-    expect(req.login).toBeNull();
+    const classTest = new TestClient(process.env.TEST_HOST!);
+    const req = await classTest.login(email, password);
+    expect(req.data.login).toBeNull();
   });
 });
