@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NodeJS, ExpressJS, GraphQL, PostgreSQL boilerplate server
 
 ## How to run the project
@@ -94,7 +93,3 @@ mutation {
   logout
 }
 ```
-=======
-# graphql-server-boilerplate
-GraphQL server boilerplate with authentication, email confirmation, caching, login - logout feature, etc.
->>>>>>> a4913092aaf20818d9a4844f0076366e501b50db
